@@ -1,0 +1,23 @@
+import { useState } from 'react';
+import axios from 'axios';
+
+function RegisterPatient() {
+  const [form, setForm] = useState({ name: '', age: '', gender: '', phone: '', address: '' });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await axios.post('http://localhost:5000/api/patients/register', form);
+    alert('Patient registered successfully!');
+    setForm({ name: '', age: '', gender: '', phone: '', address: '' });
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="p-4 border rounded">
+      <h2 className="text-xl mb-3">Patient Registration</h2>
+      <input placeholder="Name" value={form.name} onChange={e => setForm({...form, name: e.target.value})} className="border p-2 m-1" required/>
+      <input placeholder="Age" type="number" value={form.age} onChange={e => setForm({...form, age: e.target.value})} className="border p-2 m-1"/>
+      <select value={form.gender} onChange={e => setForm({...form, gender: e.target.value})} className="border p-2 m-1">
+        <option value="">Gender</option>
+        <option>Male</option><option>Female</option>
+      </select>
+      <input placeholder="Phone" value={form.phone} onChange={e => setForm({...form, phone: e.target.value})} class
